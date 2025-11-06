@@ -1,0 +1,105 @@
+@import '@xterm/xterm/css/xterm.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+}
+
+body {
+  @apply bg-gray-900 text-gray-100;
+  /* Prevent pull-to-refresh on mobile */
+  overscroll-behavior-y: none;
+  /* Better touch scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 768px) {
+  /* Ensure full height on mobile */
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* Better tap targets on mobile */
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Custom scrollbar for terminal and sidebar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #424242;
+  border-radius: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #4e4e4e;
+}
+
+/* xterm.js container styles */
+.xterm {
+  height: 100%;
+  width: 100%;
+  padding: 0 !important;
+}
+
+.xterm .xterm-screen {
+  cursor: text;
+  user-select: none !important;
+}
+
+.xterm .xterm-selection {
+  z-index: 50 !important;
+  pointer-events: none;
+}
+
+.xterm .xterm-viewport {
+  overflow-y: scroll !important;
+  scrollbar-gutter: stable both-edges;
+}
+
+/* Ensure selection overlay sits above text layers */
+.xterm .xterm-selection-layer {
+  z-index: 50 !important;
+  pointer-events: none;
+}
+
+.xterm .xterm-selection div,
+.xterm .xterm-selection-layer .xterm-selection div {
+  background-color: rgba(100, 116, 139, 0.45) !important;
+}
+
+.xterm .xterm-viewport::-webkit-scrollbar {
+  width: 12px;
+}
+
+.xterm .xterm-viewport::-webkit-scrollbar-thumb {
+  background: #6b7280;
+  border-radius: 8px;
+}
+
+.xterm .xterm-viewport::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Prevent text selection on UI elements */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}

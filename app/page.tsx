@@ -1,0 +1,306 @@
+'use client'
+
+import { useState, useEffect, useMemo } from 'react'
+import SessionList from '@/components/SessionList'
+import TerminalView from '@/components/TerminalView'
+import MessageCenter from '@/components/MessageCenter'
+import Header from '@/components/Header'
+import MobileDashboard from '@/components/MobileDashboard'
+import AgentProfile from '@/components/AgentProfile'
+import MigrationBanner from '@/components/MigrationBanner'
+import { useSessions } from '@/hooks/useSessions'
+import { useSessionActivity } from '@/hooks/useSessionActivity'
+import { TerminalProvider } from '@/contexts/TerminalContext'
+import { Terminal, Mail, User } from 'lucide-react'
+import type { Session } from '@/types/session'
+
+export default function DashboardPage() {
+  const { sessions, loading, error, refreshSessions } = useSessions()
+  const { activity, error: activityError } = useSessionActivity(true)
+  const [activeSessionId, setActiveSessionId] = useState<string | null>(null)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const [activeTab, setActiveTab] = useState<'terminal' | 'messages'>('terminal')
+  const [unreadCount, setUnreadCount] = useState(0)
+  const [isProfileOpen, setIsProfileOpen] = useState(false)
+
+  // Read session from URL parameter on mount
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const sessionParam = params.get('session')
+    if (sessionParam) {
+      setActiveSessionId(decodeURIComponent(sessionParam))
+    }
+  }, [])
+
+  // Detect mobile screen size
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+      // Auto-collapse sidebar on mobile
+      if (window.innerWidth < 768) {
+        setSidebarCollapsed(true)
+      }
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  useEffect(() => {
+    // Auto-select first session when sessions load (only if no session is set)
+    if (sessions.length > 0 && !activeSessionId) {
+      setActiveSessionId(sessions[0].id)
+    }
+  }, [sessions, activeSessionId])
+
+  // Fetch unread message count for active session
+  useEffect(() => {
+    if (!activeSessionId) return
+
+    const fetchUnreadCount = async () => {
+      try {
+        const response = await fetch(`/api/messages?session=${encodeURIComponent(activeSessionId)}&action=unread-count`)
+        if (response.ok) {
+          const data = await response.json()
+          setUnreadCount(data.count || 0)
+        }
+      } catch (error) {
+        console.error('Failed to fetch unread count:', error)
+      }
+    }
+
+    fetchUnreadCount()
+
+    // Refresh every 10 seconds
+    const interval = setInterval(fetchUnreadCount, 10000)
+    return () => clearInterval(interval)
+  }, [activeSessionId])
+
+  const handleSessionSelect = (sessionId: string) => {
+    setActiveSessionId(sessionId)
+  }
+
+  const toggleSidebar = () => {
+    setSidebarCollapsed(!sidebarCollapsed)
+  }
+
+  const derivedSessions = useMemo(() => {
+    return sessions.map((session) => {
+      const activityEntry = activity?.[session.id]
+
+      if (activityEntry) {
+        return {
+          ...session,
+          status: activityEntry.status as Session['status'],
+          lastActivity: activityEntry.lastActivity
+        }
+      }
+
+      if (activityError) {
+        return session
+      }
+
+      if (session.status === 'disconnected') {
+        return {
+          ...session,
+          status: 'idle' as Session['status']
+        }
+      }
+
+      return session
+    })
+  }, [sessions, activity, activityError])
+
+  const activeSession = derivedSessions.find((s) => s.id === activeSessionId)
+
+  // Render mobile-specific dashboard for small screens
+  // CRITICAL: Use key prop to force complete unmount/remount when switching layouts
+  // This prevents duplicate WebSocket connections and terminal instances
+  if (isMobile) {
+    return (
+      <TerminalProvider key="mobile-dashboard">
+        <MobileDashboard
+          sessions={derivedSessions}
+          loading={loading}
+          error={error?.message || null}
+          onRefresh={refreshSessions}
+        />
+      </TerminalProvider>
+    )
+  }
+
+  // Desktop dashboard
+  return (
+    <TerminalProvider key="desktop-dashboard">
+      <div className="flex flex-col h-screen bg-gray-900" style={{ overflow: 'hidden', position: 'fixed', inset: 0 }}>
+        {/* Header */}
+        <Header onToggleSidebar={toggleSidebar} sidebarCollapsed={sidebarCollapsed} activeSessionId={activeSessionId} />
+
+        {/* Migration Banner */}
+        <MigrationBanner />
+
+        {/* Main Content Area */}
+        <div className="flex flex-1 overflow-hidden relative">
+          {/* Sidebar */}
+          <aside className={`
+            border-r border-sidebar-border bg-sidebar-bg transition-all duration-300 overflow-hidden relative
+            ${sidebarCollapsed ? 'w-0' : 'w-80'}
+          `}>
+            <SessionList
+              sessions={derivedSessions}
+              activeSessionId={activeSessionId}
+              onSessionSelect={handleSessionSelect}
+              loading={loading}
+              error={error}
+              onRefresh={refreshSessions}
+              onToggleSidebar={toggleSidebar}
+            />
+          </aside>
+
+          {/* Main Content */}
+          <main className="flex-1 flex flex-col relative">
+            {/* Empty State - shown when no sessions */}
+            {derivedSessions.length === 0 && (
+              <div className="flex-1 flex items-center justify-center text-gray-400">
+                <div className="text-center">
+                  <svg
+                    className="w-16 h-16 mx-auto mb-4 text-gray-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                  <p className="text-xl mb-2">No sessions found</p>
+                  <p className="text-sm">
+                    Create a tmux session with Claude Code to get started
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {activeSession ? (
+              <div className="flex flex-col h-full" style={{ minHeight: 0 }}>
+                {/* Tab Navigation */}
+                <div className="flex border-b border-gray-800 bg-gray-900 flex-shrink-0">
+                  <button
+                    onClick={() => setActiveTab('terminal')}
+                    className={`flex items-center gap-2 px-6 py-3 text-sm font-medium transition-all duration-200 ${
+                      activeTab === 'terminal'
+                        ? 'text-blue-400 border-b-2 border-blue-400 bg-gray-800/50'
+                        : 'text-gray-400 hover:text-gray-300 hover:bg-gray-800/30'
+                    }`}
+                  >
+                    <Terminal className="w-4 h-4" />
+                    Terminal
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('messages')}
+                    className={`flex items-center gap-2 px-6 py-3 text-sm font-medium transition-all duration-200 ${
+                      activeTab === 'messages'
+                        ? 'text-blue-400 border-b-2 border-blue-400 bg-gray-800/50'
+                        : 'text-gray-400 hover:text-gray-300 hover:bg-gray-800/30'
+                    }`}
+                  >
+                    <Mail className="w-4 h-4" />
+                    Messages
+                    {unreadCount > 0 && (
+                      <span className="ml-1.5 bg-blue-500/90 text-white text-[10px] font-semibold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1.5">
+                        {unreadCount > 99 ? '99+' : unreadCount}
+                      </span>
+                    )}
+                  </button>
+                  <div className="flex-1" />
+                  {activeSession.agentId && (
+                    <button
+                      onClick={() => setIsProfileOpen(true)}
+                      className="flex items-center gap-2 px-6 py-3 text-sm font-medium transition-all duration-200 text-gray-400 hover:text-gray-300 hover:bg-gray-800/30"
+                      title="View Agent Profile"
+                    >
+                      <User className="w-4 h-4" />
+                      Agent Profile
+                    </button>
+                  )}
+                </div>
+
+                {/* Tab Content */}
+                <div className="flex-1 relative overflow-hidden">
+                  <div
+                    className="flex h-full w-full"
+                    style={{
+                      opacity: activeTab === 'terminal' ? 1 : 0,
+                      pointerEvents: activeTab === 'terminal' ? 'auto' : 'none',
+                      transition: 'opacity 120ms ease',
+                      minHeight: 0
+                    }}
+                  >
+                    <TerminalView
+                      key={activeSession.id}
+                      session={activeSession}
+                      active={activeTab === 'terminal'}
+                    />
+                  </div>
+
+                  {activeTab === 'messages' && (
+                    <div className="flex h-full w-full">
+                  <MessageCenter
+                    sessionName={activeSession.id}
+                    allSessions={derivedSessions.map(s => s.id)}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : null}
+          </main>
+      </div>
+
+      {/* Footer */}
+      <footer className="border-t border-gray-800 bg-gray-950 px-4 py-2 flex-shrink-0">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-1 md:gap-0 md:h-5">
+          <p className="text-xs md:text-sm text-white leading-none">
+            Version 0.7.1 • Made with <span className="text-red-500 text-lg inline-block scale-x-125">♥</span> in Boulder Colorado
+          </p>
+          <p className="text-xs md:text-sm text-white leading-none">
+            Concept by{' '}
+            <a
+              href="https://x.com/jkpelaez"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gray-300 transition-colors"
+            >
+              Juan Peláez
+            </a>{' '}
+            @{' '}
+            <a
+              href="https://23blocks.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-red-500 hover:text-red-400 transition-colors"
+            >
+              23blocks
+            </a>
+            . Coded by Claude
+          </p>
+        </div>
+      </footer>
+
+      {/* Agent Profile Panel */}
+      {activeSession?.agentId && (
+        <AgentProfile
+          isOpen={isProfileOpen}
+          onClose={() => setIsProfileOpen(false)}
+          agentId={activeSession.agentId}
+        />
+      )}
+    </div>
+    </TerminalProvider>
+  )
+}

@@ -1,0 +1,67 @@
+{
+  "name": "ai-maestro",
+  "version": "0.7.1",
+  "description": "Web dashboard for orchestrating multiple AI coding agents with hierarchical organization and real-time terminals",
+  "author": "Juan Peláez <juan@23blocks.com> (https://23blocks.com)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/23blocks-OS/ai-maestro.git"
+  },
+  "bugs": {
+    "url": "https://github.com/23blocks-OS/ai-maestro/issues"
+  },
+  "homepage": "https://github.com/23blocks-OS/ai-maestro#readme",
+  "keywords": [
+    "claude-code",
+    "ai",
+    "terminal",
+    "dashboard",
+    "tmux",
+    "xterm",
+    "websocket",
+    "agents",
+    "nextjs",
+    "macos"
+  ],
+  "scripts": {
+    "dev": "node server.mjs",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.mjs",
+    "lint": "next lint",
+    "gateway:build": "tsc -p services/terminal-gateway/tsconfig.json",
+    "gateway:dev": "tsc -w -p services/terminal-gateway/tsconfig.json",
+    "gateway:start": "node services/terminal-gateway/dist/index.js"
+  },
+  "dependencies": {
+    "@xterm/addon-clipboard": "^0.1.0",
+    "@xterm/addon-fit": "^0.10.0",
+    "@xterm/addon-unicode11": "^0.8.0",
+    "@xterm/addon-web-links": "^0.11.0",
+    "@xterm/addon-webgl": "^0.18.0",
+    "@xterm/xterm": "^5.5.0",
+    "http-proxy": "^1.18.1",
+    "lucide-react": "^0.545.0",
+    "next": "^14.2.0",
+    "node-pty": "^1.0.0",
+    "prom-client": "^15.1.2",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "ws": "^8.18.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@types/ws": "^8.5.0",
+    "autoprefixer": "^10.4.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.0",
+    "postcss": "^8.4.0",
+    "sharp": "^0.34.4",
+    "tailwindcss": "^3.4.0",
+    "to-ico": "^1.1.5",
+    "typescript": "^5.4.0"
+  }
+}

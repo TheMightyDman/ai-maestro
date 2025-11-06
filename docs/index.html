@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-W72WHGDW');</script>
+    <!-- End Google Tag Manager -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Maestro - Orchestrate Your AI Coding Agents</title>
+    <meta name="description" content="Autonomous AI agent orchestration dashboard for macOS, Windows (WSL2), and Linux. Manage Claude Code, Aider, Cursor with agent-to-agent communication. Future of work with multi-agent systems.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ai-maestro.23blocks.com/">
+    <meta property="og:title" content="AI Maestro - Orchestrate Your AI Coding Agents">
+    <meta property="og:description" content="Stop juggling terminal windows. Orchestrate multiple AI coding agents (Claude Code, Aider, Cursor, Copilot) from one beautiful dashboard. Works on macOS, Windows (WSL2), and Linux.">
+    <meta property="og:image" content="https://ai-maestro.23blocks.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="AI Maestro - Orchestrate your AI coding agents">
+    <meta property="og:site_name" content="AI Maestro">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://ai-maestro.23blocks.com/">
+    <meta name="twitter:title" content="AI Maestro - Orchestrate Your AI Coding Agents">
+    <meta name="twitter:description" content="Stop juggling terminal windows. Orchestrate multiple AI coding agents from one beautiful dashboard. Works on macOS, Windows (WSL2), and Linux.">
+    <meta name="twitter:image" content="https://ai-maestro.23blocks.com/og-image.png">
+    <meta name="twitter:creator" content="@jkpelaez">
+
+    <!-- Additional SEO -->
+    <meta name="author" content="Juan Peláez">
+    <meta name="keywords" content="AI agent orchestration, Claude Code dashboard, autonomous agents, AI agents communication, multi-agent systems, AI pair programming, terminal dashboard AI, Claude skills, agent-to-agent messaging, future of work AI, tmux AI dashboard, AI coding assistant, AI development tools, Claude Code skills, AI agent collaboration, intelligent coding agents, Windows WSL2 AI, Linux AI tools, cross-platform AI">
+    <link rel="canonical" href="https://ai-maestro.23blocks.com/">
+
+    <!-- Favicon & Icons -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon-120x120.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#6366f1">
+
+    <!-- Theme Colors -->
+    <meta name="theme-color" content="#6366f1">
+    <meta name="msapplication-TileColor" content="#6366f1">
+    <meta name="msapplication-config" content="browserconfig.xml">
+
+    <!-- Apple Mobile Web App -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AI Maestro">
+
+    <!-- Application Info -->
+    <meta name="application-name" content="AI Maestro">
+    <meta name="format-detection" content="telephone=no">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "AI Maestro",
+      "alternateName": "Claude Code Dashboard",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "macOS 12.0+, Windows 10/11 (WSL2), Linux",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Orchestrate multiple AI coding agents (Claude Code, Aider, Cursor, GitHub Copilot) from one unified dashboard. Zero-configuration terminal multiplexer for autonomous AI agents.",
+      "softwareVersion": "0.5.0",
+      "releaseNotes": "https://github.com/23blocks-OS/ai-maestro/releases",
+      "url": "https://ai-maestro.23blocks.com",
+      "screenshot": "https://ai-maestro.23blocks.com/images/aiteam-web.png",
+      "license": "https://opensource.org/licenses/MIT",
+      "author": {
+        "@type": "Person",
+        "name": "Juan Peláez",
+        "url": "https://x.com/jkpelaez"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "23blocks"
+      },
+      "featureList": [
+        "Multi-agent AI orchestration",
+        "Claude Code integration",
+        "Terminal session management",
+        "Real-time WebSocket streaming",
+        "Agent-to-agent communication with inbox/outbox",
+        "Unread message tracking and auto-mark-as-read",
+        "Mobile remote access",
+        "Hierarchical session organization"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "ratingCount": "1"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "What is AI Maestro?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AI Maestro is a browser-based dashboard for orchestrating multiple AI coding agents like Claude Code, Aider, Cursor, and GitHub Copilot from a unified web interface. It auto-discovers tmux sessions and provides real-time terminal streaming with zero configuration."
+        }
+      },{
+        "@type": "Question",
+        "name": "How do AI agents communicate with each other in AI Maestro?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AI Maestro includes a built-in messaging system with inbox/outbox for each agent. Agents can send structured messages with priorities, see only unread messages, and messages are automatically marked as read. The system supports natural language with Claude Code skills or universal command-line tools - no human relay needed."
+        }
+      },{
+        "@type": "Question",
+        "name": "Can I access AI Maestro from my mobile device?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. AI Maestro has a touch-optimized mobile interface that works with secure Tailscale VPN for remote access from phones or tablets. You can monitor agent progress, read terminal output, and manage sessions from anywhere."
+        }
+      },{
+        "@type": "Question",
+        "name": "What AI coding agents work with AI Maestro?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AI Maestro works with any terminal-based AI agent including Claude Code, Aider, Cursor, GitHub Copilot CLI, OpenAI Codex, and custom AI scripts. It uses tmux for session management and auto-discovers all active sessions."
+        }
+      }]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to Set Up AI Maestro",
+      "description": "Install and configure AI Maestro to orchestrate multiple AI coding agents",
+      "totalTime": "PT5M",
+      "step": [{
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Install AI Maestro",
+        "text": "Clone the repository and install dependencies",
+        "itemListElement": [{
+          "@type": "HowToDirection",
+          "text": "git clone https://github.com/23blocks-OS/ai-maestro.git && cd ai-maestro && yarn install && yarn dev"
+        }]
+      },{
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Create Your First Agent Session",
+        "text": "Click the + button in the sidebar, enter a session name with hyphens for hierarchy (e.g., myproject-backend-api), choose working directory, and click Create Agent"
+      },{
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Start Coding",
+        "text": "Your session is live. Click to switch between sessions, add notes, and organize your AI agent workflow."
+      }]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#6366f1',
+                        'primary-dark': '#4f46e5',
+                        secondary: '#8b5cf6',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <style>
+        /* Smooth scrolling with offset for fixed header */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        /* Only keep hamburger animation styles and mobile menu transition */
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: #1f2937;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+        .mobile-menu {
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        .mobile-menu.active {
+            opacity: 1;
+            transform: translateY(0);
+            display: block !important;
+            pointer-events: auto;
+        }
+
+        /* Typing cursor animation */
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background-color: #6366f1;
+            margin-left: 2px;
+            animation: blink 1s infinite;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 leading-relaxed antialiased">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W72WHGDW"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 bg-white/90 backdrop-blur-lg border-b border-gray-200 z-[100]">
+        <div class="max-w-[1200px] mx-auto px-4 md:px-8">
+            <div class="flex justify-between items-center py-3 md:py-4">
+                <a href="#" class="flex items-center gap-2 text-lg md:text-2xl font-bold text-gray-800 no-underline hover:opacity-80 transition-opacity duration-200">
+                    <img src="logo-constellation.svg" alt="AI Maestro" class="w-8 h-8 md:w-12 md:h-12">
+                    AI Maestro
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex gap-8 items-center">
+                    <a href="#features" class="text-gray-800 no-underline font-medium hover:text-primary transition-colors duration-200">Features</a>
+                    <a href="#quick-start" class="text-gray-800 no-underline font-medium hover:text-primary transition-colors duration-200">Quick Start</a>
+                    <a href="https://github.com/23blocks-OS/ai-maestro" target="_blank" class="text-gray-800 no-underline font-medium hover:text-primary transition-colors duration-200">GitHub</a>
+                    <a href="https://github.com/23blocks-OS/ai-maestro#readme" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg no-underline font-semibold transition-all duration-200 bg-primary text-white hover:bg-primary-dark hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(99,102,241,0.4)]" target="_blank">Get Started</a>
+                </div>
+
+                <!-- Mobile Navigation -->
+                <div class="flex md:hidden items-center gap-2">
+                    <a href="https://github.com/23blocks-OS/ai-maestro#readme" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg no-underline font-semibold transition-all duration-200 bg-primary text-white hover:bg-primary-dark text-sm" target="_blank">Get Started</a>
+                    <button class="hamburger bg-transparent border-0 cursor-pointer p-2 flex flex-col gap-1 z-[1001]" id="hamburger" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu hidden absolute top-full left-0 right-0 bg-white border-b border-gray-200 shadow-[0_4px_12px_rgba(0,0,0,0.1)] py-4" id="mobile-menu">
+                <a href="#features" class="block px-8 py-3 text-gray-800 no-underline font-medium transition-all duration-200 hover:bg-gray-50 hover:text-primary">Features</a>
+                <a href="#quick-start" class="block px-8 py-3 text-gray-800 no-underline font-medium transition-all duration-200 hover:bg-gray-50 hover:text-primary">Quick Start</a>
+                <a href="https://github.com/23blocks-OS/ai-maestro" target="_blank" class="block px-8 py-3 text-gray-800 no-underline font-medium transition-all duration-200 hover:bg-gray-50 hover:text-primary">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        // Hamburger menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            }
+        });
+    </script>
+
+    <!-- Hero Section -->
+    <header class="py-12 md:py-32 text-center px-4 md:px-0">
+        <div class="max-w-[1200px] mx-auto">
+            <div>
+                <p class="text-[2rem] md:text-[3rem] font-semibold text-gray-500 mb-4" id="announcement"><span class="typing-cursor"></span></p>
+                <h1 class="text-4xl md:text-[3.5rem] font-bold leading-tight md:leading-[1.2] mb-6 max-w-[900px] mx-auto">Orchestrate your AI coding agents from one dashboard.</h1>
+                <p class="text-lg md:text-xl text-gray-500 max-w-[700px] mx-auto mb-8">Manage Claude Code, Aider, Cursor, and any terminal-based AI agent from a beautiful web interface. Built for developers who love AI pair programming.</p>
+                <div class="flex flex-col md:flex-row gap-4 justify-center mb-8 md:items-center max-w-[400px] md:max-w-none mx-auto">
+                    <a href="https://github.com/23blocks-OS/ai-maestro" class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg no-underline font-semibold transition-all duration-200 bg-primary text-white hover:bg-primary-dark hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(99,102,241,0.4)] text-lg" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        View on GitHub
+                    </a>
+                    <a href="#quick-start" class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg no-underline font-semibold transition-all duration-200 bg-white text-primary border-2 border-primary hover:bg-primary hover:text-white text-lg">Learn More</a>
+                </div>
+                <div class="flex flex-wrap gap-2 justify-center">
+                    <img src="https://img.shields.io/badge/version-0.5.0-blue" alt="Version">
+                    <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20(WSL2)%20%7C%20Linux-lightgrey" alt="Platform">
+                    <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Screenshot Section -->
+    <section class="py-8 md:py-16 px-8">
+        <div class="max-w-[1200px] mx-auto">
+            <img src="images/aiteam-web.png" alt="AI Maestro Dashboard" class="w-full max-w-[1100px] mx-auto rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.15)] block">
+        </div>
+    </section>
+
+    <!-- Problem-Solution Section -->
+    <section class="py-16 bg-gray-50 px-8">
+        <div class="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="p-8 md:p-8 bg-white rounded-2xl border border-gray-200">
+                <h2 class="text-red-600 mb-4 text-2xl font-bold">The Problem</h2>
+                <p class="leading-relaxed">You're using Claude Code for backend, Aider for frontend, and Cursor for docs. Each in its own terminal window. Each in a different tmux pane. You're constantly switching contexts, losing track of which agent is where, and your terminal tabs look like chaos.</p>
+            </div>
+            <div class="p-8 md:p-8 bg-white rounded-2xl border border-gray-200">
+                <h2 class="text-emerald-600 mb-4 text-2xl font-bold">The Solution</h2>
+                <p class="leading-relaxed">AI Maestro gives you one beautiful web dashboard for all your AI coding agents. Click between sessions instantly. Organize them hierarchically. Take notes. Never lose track again.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 md:py-24 px-8">
+        <div class="max-w-[1200px] mx-auto">
+            <h2 class="text-4xl md:text-5xl text-center mb-12 font-bold">Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="p-8 border border-gray-200 rounded-2xl transition-all duration-200 hover:border-primary hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(99,102,241,0.15)]">
+                    <div class="text-5xl mb-4">🤖</div>
+                    <h3 class="mb-4 text-gray-800 text-xl font-semibold">Universal Agent Support</h3>
+                    <p class="leading-relaxed text-gray-600">Works with any terminal-based AI: Claude Code, Aider, Cursor, GitHub Copilot CLI, OpenAI Codex, and your custom AI scripts.</p>
+                </div>
+                <div class="p-8 border border-gray-200 rounded-2xl transition-all duration-200 hover:border-primary hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(99,102,241,0.15)]">
+                    <div class="text-5xl mb-4">📁</div>
+                    <h3 class="mb-4 text-gray-800 text-xl font-semibold">Smart Organization</h3>
+                    <p class="leading-relaxed text-gray-600">3-level hierarchy using hyphens (e.g., <code class="bg-gray-100 px-2 py-1 rounded text-[0.9em]">project-category-agent</code>). Dynamic color coding and auto-grouping for instant visual organization.</p>
+                </div>
+                <div class="p-8 border border-gray-200 rounded-2xl transition-all duration-200 hover:border-primary hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(99,102,241,0.15)]">
+                    <div class="text-5xl mb-4">⚡</div>
+                    <h3 class="mb-4 text-gray-800 text-xl font-semibold">Built for Speed</h3>
+                    <p class="leading-relaxed text-gray-600">WebSocket streaming for real-time terminal I/O. No lag, no polling. Keyboard shortcuts for power users.</p>
+                </div>
+                <div class="p-8 border border-gray-200 rounded-2xl transition-all duration-200 hover:border-primary hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(99,102,241,0.15)]">
+                    <div class="text-5xl mb-4">📝</div>
+                    <h3 class="mb-4 text-gray-800 text-xl font-semibold">Session Notes</h3>
+                    <p class="leading-relaxed text-gray-600">Take notes for each session, auto-saved to localStorage. Track decisions, save commands, keep TODOs.</p>
+                </div>
+                <div class="p-8 border border-gray-200 rounded-2xl transition-all duration-200 hover:border-primary hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(99,102,241,0.15)]">
+                    <div class="text-5xl mb-4">🔄</div>
+                    <h3 class="mb-4 text-gray-800 text-xl font-semibold">Full Session Management</h3>
+                    <p class="leading-relaxed text-gray-600">Create, rename, and delete sessions from the UI. Auto-discovery of existing tmux sessions.</p>
+                </div>
+                <a href="messaging.html" class="p-8 border border-gray-200 rounded-2xl transition-all duration-200 hover:border-primary hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(99,102,241,0.15)] no-underline text-inherit block cursor-pointer">
+                    <div class="text-5xl mb-4">📬</div>
+                    <h3 class="mb-4 text-gray-800 text-xl font-semibold">Agent-to-Agent Communication</h3>
+                    <p class="leading-relaxed text-gray-600">Your AI agents can now talk to each other. Built-in inbox/outbox with unread message tracking. See only new messages, mark as read automatically, and never miss important updates.</p>
+                </a>
+                <a href="mobile.html" class="p-8 border border-gray-200 rounded-2xl transition-all duration-200 hover:border-secondary hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(139,92,246,0.2)] no-underline text-inherit block cursor-pointer">
+                    <div class="text-5xl mb-4">📱</div>
+                    <h3 class="mb-4 text-gray-800 text-xl font-semibold">Access from Anywhere</h3>
+                    <p class="leading-relaxed text-gray-600">Monitor your AI agents from your phone or tablet. Touch-optimized interface with secure Tailscale connectivity.</p>
+                </a>
+                <div class="p-8 border border-gray-200 rounded-2xl transition-all duration-200 hover:border-primary hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(99,102,241,0.15)]">
+                    <div class="text-5xl mb-4">🎯</div>
+                    <h3 class="mb-4 text-gray-800 text-xl font-semibold">Zero Configuration</h3>
+                    <p class="leading-relaxed text-gray-600">Auto-discovers all tmux sessions instantly. No config files, no manual setup. Just run and start coding.</p>
+                </div>
+                <div class="p-8 border border-gray-200 rounded-2xl transition-all duration-200 hover:border-primary hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(99,102,241,0.15)]">
+                    <div class="text-5xl mb-4">💎</div>
+                    <h3 class="mb-4 text-gray-800 text-xl font-semibold">Open Source & Free</h3>
+                    <p class="leading-relaxed text-gray-600">MIT licensed. No subscriptions, no hidden costs. Built by developers, for developers. Community-driven and transparent.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start Section -->
+    <section id="quick-start" class="py-16 md:py-24 bg-gray-50 px-8">
+        <div class="max-w-[1200px] mx-auto">
+            <h2 class="text-4xl md:text-5xl text-center mb-12 font-bold">Quick Start</h2>
+            <div class="flex flex-col gap-12">
+                <div class="bg-white p-8 rounded-2xl border border-gray-200">
+                    <div class="inline-flex items-center justify-center w-12 h-12 bg-primary text-white rounded-full text-2xl font-bold mb-4">1</div>
+                    <h3 class="text-2xl mb-4 font-semibold">Install</h3>
+                    <p class="leading-relaxed mb-4"><strong>macOS / Linux:</strong></p>
+                    <pre class="bg-gray-100 p-4 rounded-lg overflow-x-auto my-4"><code class="font-mono text-sm">git clone https://github.com/23blocks-OS/ai-maestro.git
+cd ai-maestro
+yarn install
+yarn dev</code></pre>
+                    <p class="leading-relaxed mb-4"><strong>Windows (WSL2):</strong></p>
+                    <pre class="bg-gray-100 p-4 rounded-lg overflow-x-auto my-4"><code class="font-mono text-sm"># 1. Install WSL2 (PowerShell as Administrator)
+wsl --install
+
+# 2. Restart Windows, then in Ubuntu terminal:
+git clone https://github.com/23blocks-OS/ai-maestro.git
+cd ai-maestro
+yarn install
+yarn dev
+
+# 3. Access from Windows browser:</code></pre>
+                    <p class="leading-relaxed">Dashboard opens at <code class="bg-gray-100 px-2 py-1 rounded text-[0.9em] font-mono">http://localhost:23000</code></p>
+                    <div class="bg-blue-50 border-l-4 border-primary p-4 mt-4 rounded">
+                        🪟 <strong>Windows Users:</strong> See our <a href="https://github.com/23blocks-OS/ai-maestro/blob/main/docs/WINDOWS-INSTALLATION.md" class="text-primary hover:underline font-semibold" target="_blank">complete Windows installation guide</a> for detailed setup instructions.
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-2xl border border-gray-200">
+                    <div class="inline-flex items-center justify-center w-12 h-12 bg-primary text-white rounded-full text-2xl font-bold mb-4">2</div>
+                    <h3 class="text-2xl mb-4 font-semibold">Create Your First Session</h3>
+                    <p class="leading-relaxed"><strong>From the UI (Recommended):</strong></p>
+                    <ol class="ml-6 mt-2 list-decimal">
+                        <li class="mb-2">Click the <strong>"+" button</strong> in the sidebar</li>
+                        <li class="mb-2">Enter a session name using hyphens for hierarchy:<br>
+                            <code class="bg-gray-100 px-2 py-1 rounded text-[0.9em] font-mono">myproject-backend-api</code> → creates 3 levels</li>
+                        <li class="mb-2">Choose your working directory</li>
+                        <li class="mb-2">Click "Create Agent"</li>
+                        <li class="mb-2">Start your AI agent in the terminal</li>
+                    </ol>
+                    <div class="bg-blue-50 border-l-4 border-primary p-4 mt-4 rounded">
+                        💡 <strong>Hierarchy Tip:</strong> Hyphens create automatic organization<br>
+                        <code class="bg-gray-100 px-2 py-1 rounded text-[0.9em] font-mono">project-backend</code> → 2 levels<br>
+                        <code class="bg-gray-100 px-2 py-1 rounded text-[0.9em] font-mono">project-backend-api</code> → 3 levels<br>
+                        Each top level gets its own color!
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-2xl border border-gray-200">
+                    <div class="inline-flex items-center justify-center w-12 h-12 bg-primary text-white rounded-full text-2xl font-bold mb-4">3</div>
+                    <h3 class="text-2xl mb-4 font-semibold">Start Coding</h3>
+                    <p class="leading-relaxed">Your session is now live in the dashboard. Click to switch between sessions. Add notes. Organize your work. That's it.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section class="py-16 px-8">
+        <div class="max-w-[1200px] mx-auto">
+            <h2 class="text-4xl md:text-5xl text-center mb-8 font-bold">Tech Stack</h2>
+            <div class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4 max-w-[900px] mx-auto">
+                <div class="p-4 bg-gray-50 rounded-lg text-center">
+                    <strong>Frontend:</strong> Next.js 14, React 18, Tailwind CSS
+                </div>
+                <div class="p-4 bg-gray-50 rounded-lg text-center">
+                    <strong>Terminal:</strong> xterm.js with WebGL acceleration
+                </div>
+                <div class="p-4 bg-gray-50 rounded-lg text-center">
+                    <strong>Backend:</strong> Custom Node.js server with WebSocket
+                </div>
+                <div class="p-4 bg-gray-50 rounded-lg text-center">
+                    <strong>Font:</strong> Space Grotesk
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Section -->
+    <section class="py-16 md:py-24 bg-gray-50 px-8">
+        <div class="max-w-[1200px] mx-auto">
+            <h2 class="text-4xl md:text-5xl text-center mb-12 font-bold">Why AI Maestro?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-8">
+                <div class="bg-white p-8 rounded-2xl border border-gray-200">
+                    <h3 class="text-primary mb-4 text-xl font-semibold">Problem → Solution</h3>
+                    <p class="leading-relaxed">Managing multiple AI agents is chaotic. One dashboard to rule them all.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl border border-gray-200">
+                    <h3 class="text-primary mb-4 text-xl font-semibold">Why not just use tmux?</h3>
+                    <p class="leading-relaxed">You can! AI Maestro is built on tmux. But instead of memorizing keybindings, you get visual organization, point-and-click switching, persistent notes, and a beautiful UI.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl border border-gray-200">
+                    <h3 class="text-primary mb-4 text-xl font-semibold">More than a tmux GUI</h3>
+                    <p class="leading-relaxed">Think of it as tmux + organization + notes + visual hierarchy. You still have full access to your tmux sessions from the terminal.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 md:py-24 text-center bg-gradient-to-br from-primary to-secondary text-white px-8">
+        <div class="max-w-[1200px] mx-auto">
+            <div>
+                <h2 class="text-4xl md:text-5xl mb-4 font-bold">Ready to orchestrate your AI team?</h2>
+                <p class="text-xl mb-8 opacity-90">Free and open source. MIT Licensed.</p>
+                <a href="https://github.com/23blocks-OS/ai-maestro" class="inline-flex items-center gap-2 px-8 py-4 rounded-lg no-underline font-semibold transition-all duration-200 bg-white text-primary hover:bg-gray-50 hover:-translate-y-0.5 text-lg" target="_blank">
+                    Get Started on GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 pb-8 bg-gray-800 text-white px-8">
+        <div class="max-w-[1200px] mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-12 md:gap-12 mb-8">
+                <div>
+                    <h4 class="mb-4 text-lg font-semibold">AI Maestro</h4>
+                    <p class="leading-relaxed">Orchestrate multiple AI coding agents from one dashboard</p>
+                </div>
+                <div>
+                    <h4 class="mb-4 text-lg font-semibold">Links</h4>
+                    <a href="https://github.com/23blocks-OS/ai-maestro" class="block text-white/80 no-underline mb-2 transition-colors duration-200 hover:text-white">GitHub</a>
+                    <a href="https://github.com/23blocks-OS/ai-maestro/issues" class="block text-white/80 no-underline mb-2 transition-colors duration-200 hover:text-white">Issues</a>
+                    <a href="https://github.com/23blocks-OS/ai-maestro/blob/main/CONTRIBUTING.md" class="block text-white/80 no-underline mb-2 transition-colors duration-200 hover:text-white">Contributing</a>
+                    <a href="https://github.com/23blocks-OS/ai-maestro/blob/main/LICENSE" class="block text-white/80 no-underline mb-2 transition-colors duration-200 hover:text-white">License</a>
+                </div>
+                <div>
+                    <h4 class="mb-4 text-lg font-semibold">Built by</h4>
+                    <p class="leading-relaxed"><a href="https://x.com/jkpelaez" target="_blank" class="inline text-white/80 no-underline mb-0 transition-colors duration-200 hover:text-white">Juan Peláez</a> @ <a href="https://23blocks.com" target="_blank" class="inline text-white/80 no-underline mb-0 transition-colors duration-200 hover:text-white">23blocks</a></p>
+                    <p class="text-sm opacity-70 mt-2">Made with <span style="color: #ef4444;">♥</span> in Boulder, Colorado</p>
+                    <p class="text-sm opacity-70 mt-2">Coded with Claude</p>
+                </div>
+            </div>
+            <div class="text-center pt-8 border-t border-white/10 opacity-70">
+                <p>© 2025 Juan Peláez / 23blocks. MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GSAP ScrollTrigger Animations -->
+    <script>
+        // Register ScrollTrigger plugin
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Typing animation for announcement
+        const announcement = document.getElementById('announcement');
+        const text = "Stop juggling terminal windows.";
+        const cursor = announcement.querySelector('.typing-cursor');
+        let charIndex = 0;
+
+        function typeCharacter() {
+            if (charIndex < text.length) {
+                const char = text[charIndex];
+                const textNode = document.createTextNode(char);
+                announcement.insertBefore(textNode, cursor);
+                charIndex++;
+                setTimeout(typeCharacter, 50); // 50ms per character for slower typing
+            }
+        }
+
+        // Start typing after 1.5 second delay
+        setTimeout(typeCharacter, 1500);
+
+        // Hero fade in (removed - replaced by typing animation)
+        // gsap.from("header h1", {
+        //     opacity: 0,
+        //     y: 30,
+        //     duration: 0.8,
+        //     ease: "power2.out"
+        // });
+
+        gsap.from("header p", {
+            opacity: 0,
+            y: 20,
+            duration: 0.8,
+            delay: 0.2,
+            ease: "power2.out"
+        });
+
+        gsap.from("header .flex", {
+            opacity: 0,
+            y: 20,
+            duration: 0.8,
+            delay: 0.4,
+            ease: "power2.out"
+        });
+
+        // Fade in sections on scroll (skip features section - no animation needed)
+        gsap.utils.toArray("section").forEach((section) => {
+            // Skip the features section - show cards immediately without animation
+            if (section.id !== 'features') {
+                gsap.from(section, {
+                    opacity: 0,
+                    y: 50,
+                    duration: 0.8,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 80%",
+                        end: "top 50%",
+                        toggleActions: "play none none none"
+                    }
+                });
+            }
+        });
+
+        // Quick Start steps stagger
+        gsap.from("#quick-start .flex > *", {
+            opacity: 0,
+            x: -30,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: "#quick-start",
+                start: "top 70%",
+                toggleActions: "play none none none"
+            }
+        });
+    </script>
+</body>
+</html>
